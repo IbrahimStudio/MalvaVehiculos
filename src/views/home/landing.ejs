@@ -1,0 +1,36 @@
+<section class="hero">
+  <% if (hero?.eyebrow) { %><p class="eyebrow"><%= hero.eyebrow %></p><% } %>
+  <h1><%= hero?.title %></h1>
+  <p class="subtitle"><%= hero?.subtitle %></p>
+  <a class="btn" href="<%= hero?.ctaHref %>"><%= hero?.ctaText %></a>
+  <div class="hero-bg" role="presentation"></div>
+</section>
+
+<section class="features container">
+  <% (features || []).forEach(f => { %>
+    <article class="feature">
+      <div class="icon"><%= f.icon %></div>
+      <h3><%= f.title %></h3>
+      <p><%= f.text %></p>
+    </article>
+  <% }) %>
+</section>
+
+<section class="cta container">
+  <div class="card">
+    <h2>Looking for a specific truck?</h2>
+    <p>Tell us what you need—we’ll get back quickly.</p>
+    <div class="actions">
+      <a class="btn" href="/contact">Contact us</a>
+      <a class="btn btn-secondary" href="/products">Browse all trucks</a>
+    </div>
+  </div>
+</section>
+
+<section class="contact container">
+  <h2>Quick contact</h2>
+  <ul>
+    <li>📞 <a href="tel:<%= contact.phone %>"><%= contact.phone %></a></li>
+    <li>✉️ <a href="mailto:<%= contact.email %>"><%= contact.email %></a></li>
+  </ul>
+</section>

@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title><%= title %></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <% if (meta?.description) { %>
+    <meta name="description" content="<%= meta.description %>">
+  <% } %>
+  <% if (meta?.ogImage) { %>
+    <meta property="og:image" content="<%= meta.ogImage %>">
+  <% } %>
+  <link rel="stylesheet" href="/css/main.css" />
+</head>
+<body>
+  <%- include('../partials/nav'); %>
+
+  <main>
+    <%- body %>
+  </main>
+
+  <%- include('../partials/footer'); %>
+  <script src="/js/main.js" defer></script>
+</body>
+</html>
