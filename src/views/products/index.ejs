@@ -1,0 +1,31 @@
+<section class="container">
+  <h1>Available Trucks</h1>
+  <form method="get" class="filters">
+    <input type="text" name="brand" placeholder="Brand (e.g., Scania)" value="<%= filters.brand || '' %>"/>
+    <input type="number" name="minYear" placeholder="Min year" value="<%= filters.minYear || '' %>"/>
+    <input type="number" name="maxPrice" placeholder="Max price (€)" value="<%= filters.maxPrice || '' %>"/>
+    <button class="btn">Apply</button>
+    <a class="btn btn-secondary" href="/products">Reset</a>
+  </form>
+
+  <div class="grid">
+    <% if (!trucks || trucks.length === 0) { %>
+      <p>No trucks found.</p>
+    <% } else { %>
+      <% trucks.forEach(t => { %>
+        <article class="card">
+          <img src="<%= t.image_url || '/assets/placeholder.jpg' %>" alt="<%= t.title %>"/>
+          <div class="body">
+            <div class="title"><%= t.title %></div>
+            <div class="meta">
+              <%= t.brand || '' %> <%= t.model || '' %> • <%= t.year || '—' %> •
+              <%= (t.mileage && t.mileage.toLocaleString('it-IT')) || '—' %> km
+            </div>
+            <p><%= t.description || '' %></p>
+            <div class="price">€ <%= (t.price && t.price.toLocaleString('it-IT')) || '—' %></div>
+          </div>
+        </article>
+      <% }) %>
+    <% } %>
+  </div>
+</section>

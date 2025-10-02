@@ -1,10 +1,15 @@
+import 'dotenv/config';
 import express from 'express';
 import helmet from 'helmet';
 import compression from 'compression';
 import morgan from 'morgan';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import expressLayouts from 'express-ejs-layouts';   // ⬅️ add this
+import expressLayouts from 'express-ejs-layouts';
+import productsRouter from './routes/products.route.js';
+import { sql } from './lib/supabase.js';
+
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -46,7 +51,16 @@ app.get('/', (req, res) => {
   });
 });
 
+app.use('/products', productsRouter);
+// in src/server.js
+app.get('/debug/db', async (_req, res) => {
+  try { const rows = await sql`select 1 as ok`; res.json(rows[0]); }
+  catch (e) { res.status(500).json({ error: String(e) }); }
+});
+
+
 app.use((req, res) => res.status(404).send('Not found'));
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`✅ http://localhost:${PORT}`));

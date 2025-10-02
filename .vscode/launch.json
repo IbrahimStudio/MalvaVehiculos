@@ -1,0 +1,20 @@
+{
+  "version": "0.2.0",
+  "configurations": [{
+    "type": "node",
+    "request": "launch",
+    "name": "Node: Server (auto-open)",
+    "program": "${workspaceFolder}/src/server.js",
+    "cwd": "${workspaceFolder}",
+    "runtimeArgs": ["--inspect"],
+    "envFile": "${workspaceFolder}/.env",
+    "env": { "NODE_ENV": "development", "PORT": "3000" },
+    "console": "integratedTerminal",
+    "skipFiles": ["<node_internals>/**"],
+    "serverReadyAction": {
+      "pattern": "http://localhost:(\\d+)",
+      "uriFormat": "http://localhost:%s",
+      "action": "openExternally"
+    }
+  }]
+}

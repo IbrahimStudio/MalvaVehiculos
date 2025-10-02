@@ -1,0 +1,51 @@
+<section class="container">
+  <h1>Available Trucks</h1>
+
+  <form method="get" class="filters">
+    <input type="text" name="brand" placeholder="(future) Brand" disabled />
+    <input type="number" name="minYear" placeholder="(future) Min year" disabled />
+    <input type="number" name="maxPrice" placeholder="Max price (€)" value="<%= filters?.maxPrice || '' %>"/>
+    <button class="btn">Apply</button>
+    <a class="btn btn-secondary" href="/products">Reset</a>
+  </form>
+
+  <% if (error) { %>
+    <div class="alert"><%= error %></div>
+  <% } %>
+
+  <div class="card-grid">
+    <% if (!trucks || trucks.length === 0) { %>
+      <p>No trucks found.</p>
+    <% } else { %>
+      <% trucks.forEach(t => { 
+         const imgs = Array.isArray(t.imgs) ? t.imgs : [];
+         // we’ll serve images from /truck-images/<path>
+      %>
+        <a class="card-link" href="/products/<%= t.id %>" aria-label="<%= t.name %> details">
+          <article class="card floating">
+            <div class="card-carousel" 
+                 data-images='<%- JSON.stringify(imgs) %>' 
+                 data-base="/truck-images">
+              <img class="card-img" 
+                   alt="<%= t.name %>" 
+                   loading="lazy" 
+                   src="<%= imgs[0] ? ('/truck-images/' + imgs[0]) : '/assets/placeholder.jpg' %>"
+                   onerror="this.src='/assets/placeholder.jpg'">
+              <button class="cc-nav prev" type="button" aria-label="Prev">‹</button>
+              <button class="cc-nav next" type="button" aria-label="Next">›</button>
+              <div class="cc-dots" aria-hidden="true"></div>
+            </div>
+            <div class="body">
+              <div class="title"><%= t.name %></div>
+              <div class="meta">
+                <%= t.description ? t.description.slice(0, 120) : '' %>
+                <%= (t.description && t.description.length > 120) ? '…' : '' %>
+              </div>
+              <div class="price">€ <%= (t.price && Number(t.price).toLocaleString('it-IT')) || '—' %></div>
+            </div>
+          </article>
+        </a>
+      <% }) %>
+    <% } %>
+  </div>
+</section>
